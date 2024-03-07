@@ -47,6 +47,24 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <!-- Here come other details
+                ...
+                -->
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.github.unldenis.ultimateclaims.websetup.BootstrapKt</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <!-- Here come other details
+                ...
+                -->
+            </plugin>
+            <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
             </plugin>
@@ -60,6 +78,31 @@
                 <version>1.6.0</version>
                 <configuration>
                     <mainClass>MainKt</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <relocations>
+                        <relocation>
+                            <pattern>kotlin.</pattern>
+                            <shadedPattern>com.github.unldenis.ultimateclaims.websetup.shaded.kotlin.</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>io.javalin.</pattern>
+                            <shadedPattern>com.github.unldenis.ultimateclaims.websetup.shaded.javalin.</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
@@ -83,6 +126,19 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>1.9.21</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.10</version>
+        </dependency>
+
     </dependencies>
 
 </project>
